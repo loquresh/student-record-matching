@@ -55,15 +55,6 @@ To evaluate performance, a labeled testing dataset was created by generating all
 
 This test set was used to assess matching accuracy and refine distance thresholds.
 
-## Skills Demonstrated
-
-* R Programming
-* Data Cleaning and Standardization
-* Fuzzy String Matching
-* Record Linkage
-* Algorithm Design
-* Validation and Testing
-* Longitudinal Data Analysis
 
 ## Privacy
 
