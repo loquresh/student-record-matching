@@ -1,61 +1,49 @@
 # Student Record Matching Using Fuzzy String Matching
 
 ## Overview
+This project demonstrates a way to link student survey responses across multiple collection periods when no unique student identifier is available.
 
-This project demonstrates a methodology for linking student survey responses across multiple collection periods when no unique student identifier is available.
+## Project Question
+Can student records from a pre-survey and post-survey be reliably matched to the same student using name similarity alone, when no unique identifier connects them?
 
-In longitudinal survey analysis, it is often necessary to determine whether records from a pre-survey and post-survey belong to the same student. Because students may enter their names differently across surveys, exact matching can result in missed matches and inaccurate analyses.
+This breaks down into a few sub-questions:
+- How much do names vary in formatting and spelling across the two surveys?
+- What similarity method can reliably measure how close two names are?
+- How can matches be assigned without creating duplicates?
+- How accurate is the resulting matching process?
 
-To address this challenge, I developed a fuzzy matching workflow in R that identifies likely record matches based on string similarity while minimizing duplicate assignments.
+## Data Source
+Student survey responses collected at multiple time points, originally gathered as part of a nonprofit longitudinal survey project.
 
-## Problem
+*Note: The original data is confidential student data and is not included in this repository. Any example data included here is synthetic and only meant to demonstrate the methodology.*
 
-The dataset contained student survey responses collected at multiple time points. No unique identifier was available to reliably connect records across surveys.
+## Data Quality Notes
+Since there was no unique ID to match records across surveys, records had to be linked using names, which introduced a few real challenges:
+- Misspelled names
+- Inconsistent capitalization
+- Extra spaces or punctuation
+- Alternative spellings of the same name
+- Multiple possible matches for a single record
 
-Common challenges included:
-
-* Misspelled names
-* Inconsistent capitalization
-* Extra spaces or punctuation
-* Alternative spellings
-* Multiple potential matches
-
-Without a matching process, longitudinal analysis could not be performed reliably.
+Without addressing these, longitudinal analysis across the two surveys wasn't possible.
 
 ## Methodology
 
-### Data Preparation
+### 1. Data Preparation
+Names were standardized before comparing them, by converting all text to lowercase, removing punctuation, and removing spaces and special characters. This cut down on a lot of the variation that was really just formatting differences, not different names.
 
-Student names were standardized by:
+### 2. Similarity Scoring
+Levenshtein distance was used to measure how many character edits it takes to turn one name into another. A lower distance means the two names are more similar.
 
-* Converting all text to lowercase
-* Removing punctuation
-* Removing spaces and special characters
+### 3. Matching Strategy
+A few steps were used to keep the matching accurate:
+- Records were first grouped by grade level, to narrow down comparisons to a smaller, more relevant pool.
+- Pairwise string distances were calculated between all possible name combinations within each group.
+- Candidate matches below a set distance threshold were kept.
+- A greedy assignment algorithm was used from there, so each record only got matched once, avoiding duplicates.
 
-This reduced variation caused by formatting differences.
+### 4. Validation
+To check how well this worked, a labeled test set was built by generating all possible pre/post survey combinations and manually marking the true matches. This test set was used to measure accuracy and adjust the distance threshold.
 
-### Similarity Scoring
-
-Levenshtein distance was used to measure the number of character edits required to transform one name into another.
-
-Lower distances indicate higher similarity between names.
-
-### Matching Strategy
-
-To improve matching accuracy:
-
-1. Records were first grouped by grade level.
-2. Pairwise string distances were calculated between all possible name combinations.
-3. Candidate matches below a specified distance threshold were retained.
-4. A greedy assignment algorithm was used to prevent duplicate matches and create one-to-one record pairings.
-
-### Validation
-
-To evaluate performance, a labeled testing dataset was created by generating all possible pre/post survey combinations and manually identifying true matches.
-
-This test set was used to assess matching accuracy and refine distance thresholds.
-
-
-## Privacy
-
-The original project utilized confidential student data and cannot be shared publicly. Any example datasets included in this repository are synthetic and intended solely to demonstrate the methodology.
+## Tools
+R
