@@ -1,16 +1,12 @@
 # Student Record Matching Using Fuzzy String Matching
 
-## Overview
-This project demonstrates a way to link student survey responses across multiple collection periods when no unique student identifier is available.
+Linking pre- and post-survey responses for the same students is essential for measuring program impact, but the surveys had no shared student ID. This project matches records across survey periods using name similarity alone, with R, so that longitudinal analysis becomes possible. It was developed for a nonprofit's student survey program, which collected thousands of responses per cycle across dozens of school sites.
 
-## Project Question
-Can student records from a pre-survey and post-survey be reliably matched to the same student using name similarity alone, when no unique identifier connects them?
+## Key Results
 
-This breaks down into a few sub-questions:
-- How much do names vary in formatting and spelling across the two surveys?
-- What similarity method can reliably measure how close two names are?
-- How can matches be assigned without creating duplicates?
-- How accurate is the resulting matching process?
+- **Approach:** Names were standardized, compared with Levenshtein distance within grade-level groups, and assigned one-to-one with a greedy algorithm to prevent duplicate matches.
+- **Accuracy:** [X% of true matches correctly identified, Y% false match rate, based on a manually labeled test set]
+- **Impact:** [one line on what the matching made possible, e.g. pre/post analysis of program outcomes that wasn't previously feasible]
 
 ## Data Source
 Student survey responses collected at multiple time points, originally gathered as part of a nonprofit longitudinal survey project.
