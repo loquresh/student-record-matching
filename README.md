@@ -5,8 +5,7 @@ Linking pre- and post-survey responses for the same students is essential for me
 ## Key Results
 
 - **Approach:** Names were standardized, compared with Levenshtein distance within grade-level groups, and assigned one-to-one with a greedy algorithm to prevent duplicate matches.
-- **Accuracy:** [X% of true matches correctly identified, Y% false match rate, based on a manually labeled test set]
-- **Impact:** [one line on what the matching made possible, e.g. pre/post analysis of program outcomes that wasn't previously feasible]
+- **Impact:** Starting from pre and post survey datasets with over 9,000 students each, the process produced about 5,000 matched students with usable pre and post data, enough for pre/post comparison of program outcomes. Not every student could or should be matched. Incomplete names, students leaving or changing schools, and year-to-year changes in partner schools and classes all reduce the matchable pool.
 
 ## Data Source
 Student survey responses collected at multiple time points, originally gathered as part of a nonprofit longitudinal survey project.
